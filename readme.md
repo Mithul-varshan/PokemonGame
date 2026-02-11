@@ -1,1 +1,3 @@
-Hi this a rtg game
+PokéWorld is a browser-based 2D role-playing game inspired by classic Pokémon games, built using HTML, JavaScript, and the Canvas API. The game features a tile-based open world designed with Tiled Map Editor, complete with layered environments, collision boundaries, and interactive regions that trigger turn-based Pokémon battles.
+
+Players explore a richly detailed map with landmasses, plateaus, trees, paths, and foreground elements while controlling a character with smooth movement and animations. Entering specific zones activates random battle encounters, seamlessly transitioning the player into a dynamic battle scene with animated sprites, health bars, attack interfaces, dialogue queues, and sound effects.
