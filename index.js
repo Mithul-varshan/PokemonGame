@@ -10,8 +10,8 @@ for (let i = 0; i < collisions.length; i += 70) {
 }
 
 const battleZonesMap = []
-for (let i = 0; i < battleZonesData.length; i += 70) {
-  battleZonesMap.push(battleZonesData.slice(i, 70 + i))
+for (let i = 0; i < battleZones.length; i += 70) {
+  battleZonesMap.push(battleZones.slice(i, 70 + i))
 }
 
 const charactersMap = []
@@ -40,12 +40,12 @@ collisionsMap.forEach((row, i) => {
   })
 })
 
-const battleZones = []
+const battleZoneBoundaries = []
 
 battleZonesMap.forEach((row, i) => {
   row.forEach((symbol, j) => {
     if (symbol === 1025)
-      battleZones.push(
+      battleZoneBoundaries.push(
         new Boundary({
           position: {
             x: j * Boundary.width + offset.x,
@@ -187,13 +187,13 @@ const movables = [
   background,
   ...boundaries,
   foreground,
-  ...battleZones,
+  ...battleZoneBoundaries,
   ...characters
 ]
 const renderables = [
   background,
   ...boundaries,
-  ...battleZones,
+  ...battleZoneBoundaries,
   ...characters,
   player,
   foreground
@@ -216,8 +216,8 @@ function animate() {
 
   // activate a battle
   if (keys.w.pressed || keys.a.pressed || keys.s.pressed || keys.d.pressed) {
-    for (let i = 0; i < battleZones.length; i++) {
-      const battleZone = battleZones[i]
+    for (let i = 0; i < battleZoneBoundaries.length; i++) {
+      const battleZone = battleZoneBoundaries[i]
       const overlappingArea =
         (Math.min(
           player.position.x + player.width,
