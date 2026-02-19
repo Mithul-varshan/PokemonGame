@@ -28,8 +28,274 @@
     button:hover {
       background-color: #ddd;
     }
+
+    .help-toggle {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      background-color: #ff3333;
+      color: white;
+      padding: 10px 20px;
+      border: 3px solid white;
+      font-size: 14px;
+      z-index: 100;
+      cursor: pointer;
+    }
+
+    .help-toggle:hover {
+      background-color: #cc0000;
+    }
+
+    .help-panel {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background-color: white;
+      border: 4px solid black;
+      padding: 20px;
+      max-width: 600px;
+      max-height: 80vh;
+      overflow-y: auto;
+      z-index: 200;
+      display: none;
+    }
+
+    .help-panel h2 {
+      font-size: 18px;
+      margin-bottom: 15px;
+      color: #ff3333;
+    }
+
+    .help-panel h3 {
+      font-size: 12px;
+      margin-top: 15px;
+      margin-bottom: 8px;
+    }
+
+    .help-panel p {
+      font-size: 10px;
+      line-height: 1.6;
+      margin: 5px 0;
+    }
+
+    .help-panel .key {
+      background-color: #333;
+      color: white;
+      padding: 2px 8px;
+      border-radius: 3px;
+      font-size: 10px;
+    }
+
+    .close-help {
+      float: right;
+      background-color: #333;
+      color: white;
+      padding: 5px 15px;
+      font-size: 12px;
+      cursor: pointer;
+    }
+    .overlay-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.7);
+      z-index: 150;
+      display: none;
+    }
+
+    /* CORNER DECORATION */
+    #gameCornerDecor {
+      position: fixed;
+      right: 10px;
+      bottom: 10px;
+      width: 250px;
+      background-color: #ffd700;
+      border: 4px solid black;
+      padding: 15px;
+      text-align: center;
+      font-family: 'Press Start 2P';
+      font-size: 12px;
+      z-index: 50;
+      box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
+    }
+    body {
+      background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      padding: 20px;
+    }
+
+    div[style*='display: inline-block'] {
+      border: 8px solid #333;
+      box-shadow: 0 0 20px rgba(0, 0, 0, 0.5);
+    }
+
+    .health-bar-container {
+      background-color: #ccc;
+      height: 12px;
+      border: 2px solid #333;
+      margin: 8px 0;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .health-bar-fill {
+      background: linear-gradient(90deg, #00ff00 0%, #ffff00 50%, #ff0000 100%);
+      height: 100%;
+      transition: width 0.3s ease;
+      position: relative;
+    }
+
+    .health-bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.4) 0%,
+        transparent 50%
+      );
+    }
+
+    #userInterface {
+      background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+    }
+
+    #attacksBox button {
+      padding: 12px;
+      margin: 5px;
+      background-color: #4caf50;
+      color: white;
+      border: 2px solid #333;
+      font-family: 'Press Start 2P';
+      font-size: 10px;
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    #attacksBox button:hover {
+      background-color: #45a049;
+      transform: scale(1.05);
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
+    }
+
+    #attackBox button:active {
+      transform: scale(0.95);
+    }
+
+    #dialogueBox {
+      font-size: 11px;
+      font-weight: bold;
+      color: #333;
+      animation: fadeIn 0.3s ease;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+      }
+      to {
+        opacity: 1;
+      }
+    }
+
+    #characterDialogueBox {
+      font-size: 11px;
+      line-height: 1.6;
+      padding: 15px;
+      background: linear-gradient(135deg, #ffffff 0%, #fffacd 100%);
+      animation: slideUp 0.3s ease;
+    }
+
+    @keyframes slideUp {
+      from {
+        transform: translateY(20px);
+        opacity: 0;
+      }
+      to {
+        transform: translateY(0);
+        opacity: 1;
+      }
+    }
+
+    .monster-name {
+      font-size: 14px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #ff3333;
+    }
+
+    button {
+      transition: all 0.2s;
+    }
+
+    button:active {
+      transform: scale(0.95);
+    }
+    .help-toggle {
+      animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+      0%,
+      100% {
+        box-shadow: 0 0 5px #ff3333;
+      }
+      50% {
+        box-shadow: 0 0 15px #ff3333;
+      }
+    }
   </style>
 </head>
+
+<button class="help-toggle" onclick="toggleHelp()">? HELP</button>
+<div id="gameCornerDecor">⭐ POKÉMON ADVENTURE ⭐</div>
+<div class="overlay-bg" id="helpOverlay" onclick="toggleHelp()"></div>
+
+<div class="help-panel" id="helpPanel">
+  <button class="close-help" onclick="toggleHelp()">X CLOSE</button>
+  <h2>🎮 Game Controle</h2>
+
+  <h3>MOVEMENT</h3>
+  <p><span class="key">W</span> - Move Up</p>
+  <p><span class="key">A</span> - Move Left</p>
+  <p><span class="key">S</span> - Move Down</p>
+  <p><span class="key">D</span> - Move Right</p>
+
+  <h3>INTERACTIONS</h3>
+  <p><span class="key">SPACE</span> - Talk to NPCs / Continue dialogue</p>
+  <p><span class="key">CLICK</span> - Start game audio</p>
+
+  <h3>HOW TO PLAY</h3>
+  <p>🗺️ <strong>Explore the town:</strong> Move around using WASD keys</p>
+  <p>💬 <strong>Talk to Villagers:</strong> Walk up to NPCs and press SPACE</p>
+  <p>
+    ⚔️ <strong>Battle wild monsters:</strong> Walk through grass (darker areas)
+  </p>
+  <p>🎯 <strong>During battles:</strong> Click attack buttons to fight</p>
+  <p>📊 <strong>Track health:</strong> Watch the green health bars</p>
+
+  <h3>BATTLE SYSTEM</h3>
+  <p>. Random encounters occur in tall grass (1% change per step)</p>
+  <p>. Choose attacks by clicking buttons</p>
+  <p>. Each attack has different damage and effects</p>
+  <p>. Reduce enemy health to 0 to win</p>
+  <p>. Click dialogue box to continue battle messages</p>
+
+  <h3>TIPS</h3>
+  <p>🌟 Stay away from grass if you want to avoid battles</p>
+  <p>🌟 Talk to everyone - they might have useful info</p>
+  <p>🌟 Watch attack types and colors when choosing moves</p>
+</div>
 
 <div style="display: inline-block; position: relative">
   <div
@@ -76,7 +342,7 @@
         padding: 12px;
       "
     >
-      <h1 style="font-size: 16px">Draggle</h1>
+      <h1 style="font-size: 16px; margin: 0 0 10px 0">Draggle</h1>
       <div style="position: relative">
         <div
           style="height: 5px; background-color: #ccc; margin-top: 10px"
@@ -93,6 +359,12 @@
           "
         ></div>
       </div>
+      <p
+        style="font-size: 9px; margin: 5px 0; text-align: right"
+        id="enemyHPText"
+      >
+        100/100 HP
+      </p>
     </div>
 
     <!-- Represents health bar of emby (us) -->
@@ -105,25 +377,23 @@
         right: 50px;
         border: 4px black solid;
         padding: 12px;
+        box-shadow: 3px 3px 10px rgba(0, 0, 0, 0.3);
       "
     >
-      <h1 style="font-size: 16px">Emby</h1>
-      <div style="position: relative">
-        <div
-          style="height: 5px; background-color: #ccc; margin-top: 10px"
-        ></div>
+      <h1 style="font-size: 16px; margin: 0 0 10px 0">Emby</h1>
+      <div class="health-bar-container">
         <div
           id="playerHealthBar"
-          style="
-            height: 5px;
-            background-color: green;
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-          "
+          class="health-bar-fill"
+          style="width: 100%"
         ></div>
       </div>
+      <p
+        style="font-size: 9px; margin: 5px 0; text-align: right"
+        id="playerHPText"
+      >
+        100/100 HP
+      </p>
     </div>
 
     <div
@@ -176,6 +446,69 @@
     </div>
   </div>
 </div>
+
+<script>
+  function toggleHelp() {
+    const panel = document.getElementById('helpPanel')
+    const overlay = document.getElementById('helpOverlay')
+
+    if (panel.style.display === 'none' || panel.style.display === '') {
+      panel.style.display = 'block'
+      overlay.style.display = 'block'
+    } else {
+      panel.style.display = 'none'
+      overlay.style.display = 'none'
+    }
+  }
+</script>
+
+<script>
+  function updateHealthBars(playerHP, enemyHP, maxHP) {
+    const playerPercent = (playerHP / maxHP) * 100
+    const enemyPercent = (enemyHP / maxHP) * 100
+
+    document.getElementById('playerHealthBar').style.width = playerPercent + '%'
+    document.getElementById('enemyHealthBar').style.width = enemyPercent + '%'
+
+    document.getElementById('playerHPText').textContent =
+      playerHP + '/' + maxHP + ' HP'
+    document.getElementById('enemyHPText').textContent =
+      enemyHP + '/' + maxHP + ' HP'
+  }
+
+  function showDamage(element, damage) {
+    const damageText = document.createElement('div')
+    damageText.textContent = '-' + damage
+    damageText.style.cssText = `
+      position: absolute;
+      color: #ff0000;
+      font-weight: bold;
+      font-size: 20px;
+      pointer-event: none;
+      z-index: 100;
+      animation: floatUp 1s ease-out forward;
+    `
+    const style = document.createElement('style')
+    style.textContent = `
+      @keyframes floatUp {
+      0% { transform: translateY(0) translateX(0); opacity: 1;}
+      100% { transform: translateY(-50px) translateX(20px); opacity: 0;}
+    }`
+    document.head.appendChild(style)
+    element.appendChild(damageText)
+
+    setTimeout(() => damageText.remove(), 1000)
+  }
+
+  function animateAttack(attacker) {
+    attacker.style.transition = 'transform 0.3s ease'
+    attacker.style.transform = 'scale(1.1)'
+    setTimeout(() => {
+      attacker.style.transform = 'scale(1)'
+    }, 300)
+  }
+</script>
+
 <script
   src="https://cdnjs.cloudflare.com/ajax/libs/howler/2.2.3/howler.min.js"
   integrity="sha512-6+YN/9o9BWrk6wSfGxQGpt3EUK6XeHi6yeHV+TYD2GR0Sj/cggRpXr1BrAQf0as6XslxomMUxXp2vIl+fv0QRA=="
