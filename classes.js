@@ -125,9 +125,28 @@ class Monster extends Sprite {
   }
 
   attack({ attack, recipient, renderedSprites }) {
+    // Check for miss (10% chance)
+    const isMiss = Math.random() < 0.1
+    if (isMiss) {
+      document.querySelector('#dialogueBox').style.display = 'block'
+      document.querySelector('#dialogueBox').innerHTML =
+        this.name + ' used ' + attack.name + ' but it missed!'
+      return
+    }
+
+    // Check for critical hit (10% chance)
+    const isCritical = Math.random() < 0.1
+    let damageDealt = attack.damage
+    if (isCritical) {
+      damageDealt = Math.floor(attack.damage * 2)
+    }
+
     document.querySelector('#dialogueBox').style.display = 'block'
-    document.querySelector('#dialogueBox').innerHTML =
-      this.name + ' used ' + attack.name
+    let dialogueText = this.name + ' used ' + attack.name
+    if (isCritical) {
+      dialogueText += ' (Critical Hit!)'
+    }
+    document.querySelector('#dialogueBox').innerHTML = dialogueText
 
     let healthBar = '#enemyHealthBar'
     if (this.isEnemy) healthBar = '#playerHealthBar'
@@ -135,7 +154,38 @@ class Monster extends Sprite {
     let rotation = 1
     if (this.isEnemy) rotation = -2.2
 
-    recipient.health -= attack.damage
+    recipient.health = Math.max(0, recipient.health - damageDealt)
+
+    // Show floating damage number
+    const damageDisplay = document.createElement('div')
+    damageDisplay.style.position = 'fixed'
+    damageDisplay.style.color = isCritical ? '#ff0000' : '#ffffff'
+    damageDisplay.style.fontSize = isCritical ? '24px' : '20px'
+    damageDisplay.style.fontWeight = 'bold'
+    damageDisplay.style.fontFamily = "'Press Start 2P', cursive"
+    damageDisplay.style.pointerEvents = 'none'
+    damageDisplay.style.zIndex = '50'
+    damageDisplay.innerHTML = `-${damageDealt}`
+    damageDisplay.style.left = recipient.position.x + 100 + 'px'
+    damageDisplay.style.top = recipient.position.y - 50 + 'px'
+    document.body.appendChild(damageDisplay)
+
+    gsap.to(damageDisplay, {
+      y: -40,
+      opacity: 0,
+      duration: 1,
+      onComplete: () => {
+        damageDisplay.remove()
+      }
+    })
+
+    // Health warning - change bar color to red if <30%
+    if (recipient.health < 30) {
+      gsap.to(healthBar, {
+        backgroundColor: '#ff0000',
+        duration: 0.3
+      })
+    }
 
     switch (attack.name) {
       case 'Fireball':

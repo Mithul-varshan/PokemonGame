@@ -16,6 +16,12 @@ let queue
 
 let isPlayerTurn = true
 
+let embyLevel = 1
+let embyXP = 0
+let battlesWon = 0
+
+const availableEnemies = ['Draggle', 'Draggle']
+
 function setAttackButtonDisabled(disabled) {
   document.querySelectorAll('#attacksBox button').forEach((button) => {
     button.disabled = disabled
@@ -27,10 +33,17 @@ function initBattle() {
   document.querySelector('#dialogueBox').style.display = 'none'
   document.querySelector('#enemyHealthBar').style.width = '100%'
   document.querySelector('#playerHealthBar').style.width = '100%'
+  document.querySelector('#enemyHealthBar').style.backgroundColor = '#4efb38'
+  document.querySelector('#playerHealthBar').style.backgroundColor = '#4efb38'
   document.querySelector('#attacksBox').replaceChildren()
+  const randomEnemyName =
+    availableEnemies[Math.floor(Math.random() * availableEnemies.length)]
 
-  draggle = new Monster(monsters.Draggle)
+  draggle = new Monster(monsters[randomEnemyName])
+
   emby = new Monster(monsters.Emby)
+  emby.level = embyLevel
+  emby.xp = embyXP
   renderedSprites = [draggle, emby]
   queue = []
   isPlayerTurn = true
@@ -56,6 +69,25 @@ function initBattle() {
       if (draggle.health <= 0) {
         queue.push(() => {
           draggle.faint()
+        })
+        queue.push(() => {
+          battlesWon++
+          embyXP += 30
+          // Level up if XP reaches 100
+          if (embyXP >= 100) {
+            embyXP = embyXP - 100
+            embyLevel++
+            emby.level = embyLevel
+            emby.xp = embyXP
+            document.querySelector('#dialogueBox').innerHTML =
+              'Level Up! ' + emby.name + ' is now level ' + embyLevel + '!'
+            document.querySelector('#dialogueBox').style.display = 'block'
+          } else {
+            emby.xp = embyXP
+            document.querySelector('#dialogueBox').innerHTML =
+              'Victory! Battles won: ' + battlesWon
+            document.querySelector('#dialogueBox').style.display = 'block'
+          }
         })
         queue.push(() => {
           //fade back to black
