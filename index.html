@@ -6,7 +6,7 @@
     rel="stylesheet"
   />
   <style>
-    * {
+    /* * {
       font-family: 'Press Start 2P', cursive;
       box-sizing: border-box;
     }
@@ -104,10 +104,10 @@
       background-color: rgba(0, 0, 0, 0.7);
       z-index: 150;
       display: none;
-    }
+    } */
 
     /* CORNER DECORATION */
-    #gameCornerDecor {
+    /* #gameCornerDecor {
       position: fixed;
       right: 10px;
       bottom: 10px;
@@ -122,7 +122,7 @@
       box-shadow: 5px 5px 0 rgba(0, 0, 0, 0.3);
     }
     body {
-      background: linear-gradient(135deg, #ffd700 0%, #ffa500 100%);
+      background: linear-gradient(135deg, #a49f02 0%, #ffa500 100%);
       display: flex;
       justify-content: center;
       align-items: center;
@@ -253,7 +253,226 @@
       50% {
         box-shadow: 0 0 15px #ff3333;
       }
+    } */
+    * {
+      font-family: 'Press Start 2P', cursive;
+      box-sizing: border-box;
+    } 
+
+    body {
+      background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+      display: flex;
+      justify-content: center;
+      align-items: centre;
+      min-height: 100vh;
+      margin:0;
+      padding: 20px;
     }
+
+    div[style*='display: inline-block'] {
+      border: 12px solid #2c3e50;
+      box-shadow: 0 20px 60px rgba(0,0,0,0.4), insert 0 0 0 2px #ecf0f1;
+      background-color: #000;
+      position: relative;
+    }
+
+    canvas {
+      display: block;
+      background-color: #1a1a1a;
+    }
+
+    .help-toggle {
+      position: fixed;
+      top: 20px;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+      color: white;
+      padding: 12px 24px;
+      border: 3px solid white;
+      font-size: 14px;
+      z-index: 100;
+      cursor: pointer;
+      box-shadow: 0 8px 15px rgba(255,107,107,0.4);
+      transition: all 0.3s ease;
+      border-radius: 8px;
+    }
+
+    .help-toggle:hover {
+      transform: translateY(-3px);
+      box-shadow: 0 12px 25px rgba(255,107,107,0.6);
+    }
+
+    .help-toggle:active {
+      transform: translateY(-1px);
+    }
+
+    .help-panel {
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+      border: 6px solid #2c3e50;
+      border-radius: 12px;
+      padding: 30px;
+      max-width: 650px;
+      max-height: 80vh;
+      overflow-y: auto;
+      z-index: 200;
+      display: none;
+      box-shadow: 0 30px 60px rgba(0, 0, 0, 0.3);
+    }
+
+    .help-panel::-webkit-scrollbar {
+      width: 8px;
+    }
+
+    .help-panel::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+
+    .help-panel h2{
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #667eea;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+    }
+
+    .help-panel h3 {
+      font-size: 14px;
+      margin-top: 18px;
+      margin-bottom: 10px;
+      color: #764ba2;
+      border-bottom: 2px solid #667eea;
+      padding-bottom: 5px;
+    }
+
+    .help-panel p {
+      font-size: 11px;
+      line-height: 1.8;
+      margin: 8px 0;
+      color: #333;
+    }
+
+    .help-panel .key {
+      background: linear-gradient(135deg, #333 0%, #555 100%);
+      color: #ffff00;
+      padding: 4px 10px;
+      border-radius: 6px;
+      font-size: 10px;
+      font-weight: bold;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+      display:inline-block;
+      margin: 0 4px;
+    }
+
+    .close-help {
+      float: right;
+      background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
+      color: white;
+      padding: 8px 18px;
+      font-size: 12px;
+      cursor: pointer;
+      border: none;
+      border-radius: 6px;
+      box-shadow: 0 4px 10px rgba(255,107,107,0.3);
+      transition: all 0.3s ease;
+    }
+
+    .close-help:hover {
+      transform: scale(1.05);
+      box-shadow: 0 6px 15px rgba(255, 107, 107, 0.4);
+    }
+
+    .overlay-bg {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background-color: rgba(0, 0, 0, 0.8);
+      z-index: 150;
+      display: none;
+    }
+
+    #gameCornerDecor {
+      position: fixed;
+      right: 20px;
+      bottom: 20px;
+      background: linear-gradient(135deg, #ffd700 0%, #ffed4e 100%);
+      border: 6px solid #2c3e50;
+      border-radius: 12px;
+      padding: 20px;
+      text-align: center;
+      font-size: 14px;
+      z-index: 50;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      animation: float 3s ease-in-out infinite;
+    }
+
+    @keyframes float  {
+      0%, 100% { transform: translateY(0px);}
+      50% { transform: translateY(-10px);}
+    }
+
+    .health-bar-container {
+      background-color: #ecf0f1;
+      height: 16px;
+      border: 3px solid #2c3e50;
+      margin: 10px 0;
+      position: relative;
+      overflow: hidden;
+      border-radius: 4px;
+    }
+    .health-bar-fill{
+      background: linear-gradient(90deg, #2ecc71 0%, #f1c40f 50%, #e74c3c 100%);
+      height: 100%;
+      transition: width 0.4s ease;
+      position: relative;
+      box-shadow: inset 0 1px 2px rgba(255,255,255,0.3);
+    }
+
+    .health-bar-fill::after {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      right: 0;
+      bottom: 0;
+      background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 50%);
+    }
+
+    #userInterface {
+      background: linear-gradient(135deg, #ffffff 0%, #ecf0f1 100%);
+      box-shadow: inset 0 0 0 2px #bdc3c7;
+    }
+
+    [style*='width: 250px'][style*='border: 4px black solid'] {
+      background: linear-gradient(135deg, #ffffff 0%, #f5f7fa 100%) !important;
+      border: 4px solid #2c3e50 !important;
+      border-radius: 8px;
+      box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+      transition: all 0.3s ease;
+    }
+
+    [style*='width: 250px'][style*='border: 4px black solid']:hover {
+      transform: translateY(-5px);
+      box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    }
+
+    .monster-name {
+      font-size: 16px;
+      font-weight: bold;
+      margin-bottom: 10px;
+      color: #667eea;
+      text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+    }
+
+    #attackBox {
+      display: grid !important ;
+    }
+
+
   </style>
 </head>
 
