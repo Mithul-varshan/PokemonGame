@@ -10,5 +10,6 @@ const attacks = {
         damage: 25,
         type: 'Fire',
         color: 'red'
+        
     }
 }

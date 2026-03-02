@@ -25,13 +25,12 @@ function checkForCharacterCollision({
                     position: {
                         x: character.position.x + characterOffset.x,
                         y: character.position.y + characterOffset.y
-                        
                     }
                 }
             })
         ) {
             player.interactionAsset = character
             break
-        }
+        }           
     }
 }
