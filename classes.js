@@ -107,6 +107,9 @@ class Monster extends Sprite {
       rotation
     })
     this.health = 100
+    this.maxHealth = 100
+    this.level = 1
+    this.xp = 0
     this.isEnemy = isEnemy
     this.name = name
     this.attacks = attacks

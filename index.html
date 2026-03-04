@@ -257,21 +257,24 @@
     * {
       font-family: 'Press Start 2P', cursive;
       box-sizing: border-box;
-    } 
+    }
 
     body {
       background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
       display: flex;
       justify-content: center;
-      align-items: centre;
+      align-items: center;
       min-height: 100vh;
-      margin:0;
+      margin: 0;
       padding: 20px;
+      overflow: hidden;
     }
 
     div[style*='display: inline-block'] {
       border: 12px solid #2c3e50;
-      box-shadow: 0 20px 60px rgba(0,0,0,0.4), insert 0 0 0 2px #ecf0f1;
+      box-shadow:
+        0 20px 60px rgba(0, 0, 0, 0.4),
+        inset 0 0 0 2px #ecf0f1;
       background-color: #000;
       position: relative;
     }
@@ -284,6 +287,7 @@
     .help-toggle {
       position: fixed;
       top: 20px;
+      right: 20px;
       background: linear-gradient(135deg, #ff6b6b 0%, #ee5a6f 100%);
       color: white;
       padding: 12px 24px;
@@ -291,14 +295,14 @@
       font-size: 14px;
       z-index: 100;
       cursor: pointer;
-      box-shadow: 0 8px 15px rgba(255,107,107,0.4);
+      box-shadow: 0 8px 15px rgba(255, 107, 107, 0.4);
       transition: all 0.3s ease;
       border-radius: 8px;
     }
 
     .help-toggle:hover {
       transform: translateY(-3px);
-      box-shadow: 0 12px 25px rgba(255,107,107,0.6);
+      box-shadow: 0 12px 25px rgba(255, 107, 107, 0.6);
     }
 
     .help-toggle:active {
@@ -331,7 +335,7 @@
       border-radius: 10px;
     }
 
-    .help-panel h2{
+    .help-panel h2 {
       font-size: 20px;
       margin-bottom: 20px;
       color: #667eea;
@@ -362,7 +366,7 @@
       font-size: 10px;
       font-weight: bold;
       box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-      display:inline-block;
+      display: inline-block;
       margin: 0 4px;
     }
 
@@ -375,7 +379,7 @@
       cursor: pointer;
       border: none;
       border-radius: 6px;
-      box-shadow: 0 4px 10px rgba(255,107,107,0.3);
+      box-shadow: 0 4px 10px rgba(255, 107, 107, 0.3);
       transition: all 0.3s ease;
     }
 
@@ -406,13 +410,25 @@
       text-align: center;
       font-size: 14px;
       z-index: 50;
-      box-shadow: 0 10px 30px rgba(0,0,0,0.3);
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
       animation: float 3s ease-in-out infinite;
+      pointer-events: none;
     }
 
-    @keyframes float  {
-      0%, 100% { transform: translateY(0px);}
-      50% { transform: translateY(-10px);}
+    @media (max-width: 1200px), (max-height: 760px) {
+      #gameCornerDecor {
+        display: none;
+      }
+    }
+
+    @keyframes float {
+      0%,
+      100% {
+        transform: translateY(0px);
+      }
+      50% {
+        transform: translateY(-10px);
+      }
     }
 
     .health-bar-container {
@@ -424,12 +440,12 @@
       overflow: hidden;
       border-radius: 4px;
     }
-    .health-bar-fill{
+    .health-bar-fill {
       background: linear-gradient(90deg, #2ecc71 0%, #f1c40f 50%, #e74c3c 100%);
       height: 100%;
       transition: width 0.4s ease;
       position: relative;
-      box-shadow: inset 0 1px 2px rgba(255,255,255,0.3);
+      box-shadow: inset 0 1px 2px rgba(255, 255, 255, 0.3);
     }
 
     .health-bar-fill::after {
@@ -439,7 +455,11 @@
       left: 0;
       right: 0;
       bottom: 0;
-      background: linear-gradient(180deg, rgba(255,255,255,0.3) 0%, transparent 50%);
+      background: linear-gradient(
+        180deg,
+        rgba(255, 255, 255, 0.3) 0%,
+        transparent 50%
+      );
     }
 
     #userInterface {
@@ -471,8 +491,6 @@
     #attackBox {
       display: grid !important ;
     }
-
-
   </style>
 </head>
 
@@ -509,6 +527,28 @@
   <p>. Each attack has different damage and effects</p>
   <p>. Reduce enemy health to 0 to win</p>
   <p>. Click dialogue box to continue battle messages</p>
+
+  <h3>PARTY SYSTEM</h3>
+  <p>
+    👥 <strong>Start a battle:</strong> You'll see your 3 party members on the
+    right side
+  </p>
+  <p>
+    🔄 <strong>During battle:</strong> Press <span class="key">1</span>,
+    <span class="key">2</span>, or <span class="key">3</span> to switch monsters
+  </p>
+  <p>
+    💀 <strong>When a monster faints:</strong> Click dialogue or press a number
+    to switch to another
+  </p>
+  <p>
+    📈 <strong>Track progress:</strong> Each monster levels independently and
+    remembers their stats
+  </p>
+  <p>
+    ⚡ <strong>Experience:</strong> Win battles to gain 30 XP per monster (Level
+    up at 100 XP)
+  </p>
 
   <h3>TIPS</h3>
   <p>🌟 Stay away from red grass if you want to avoid battles</p>
@@ -612,6 +652,36 @@
         id="playerHPText"
       >
         100/100 HP
+      </p>
+    </div>
+
+    <!-- Party Display -->
+    <div
+      id="partyDisplay"
+      style="
+        background-color: white;
+        width: 120px;
+        position: absolute;
+        top: 180px;
+        right: 20px;
+        border: 4px black solid;
+        padding: 8px;
+        display: none;
+      "
+    >
+      <h3 style="font-size: 11px; margin: 0 0 8px 0; text-align: center">
+        PARTY
+      </h3>
+      <div id="partyList" style="font-size: 8px"></div>
+      <p
+        style="
+          font-size: 7px;
+          margin: 8px 0 0 0;
+          text-align: center;
+          color: #666;
+        "
+      >
+        Press 1-3 to switch
       </p>
     </div>
 
